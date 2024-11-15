@@ -13,7 +13,7 @@ function Profile() {
   // Clear all localStorage and log out
   const logout = () => {
     axios
-      .get("http://localhost:5500/auth/logout", { withCredentials: true })
+      .get(`${backend_products_url}/auth/logout`, { withCredentials: true })
       .then(() => {
         localStorage.clear(); // Clear all items from local storage
         window.location.href = "/auth"; // Redirect to login page
