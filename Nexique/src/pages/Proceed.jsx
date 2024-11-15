@@ -100,7 +100,7 @@ function Proceed() {
       // Wait for 3 seconds before sending the request
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
-      const response = await fetch("http://localhost:5500/order/placeOrder", {
+      const response = await fetch(`${backend_url}/order/placeOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
