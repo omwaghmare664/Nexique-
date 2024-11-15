@@ -127,7 +127,7 @@ function Order() {
                               >
                                 <div className="flex items-center space-x-4">
                                   <img
-                                    src={`http://localhost:5500/${item.productId.productImage}`}
+                                    src={`${backend_url}/${item.productId.productImage}`}
                                     alt={item.productId.name}
                                     className="w-16 h-16 object-cover rounded-lg"
                                   />
