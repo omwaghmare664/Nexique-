@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 app.use(cors({
     origin: [
-        "https://nexique.vercel.app",
+        "https://nexique-o0pw.onrender.com",
         "http://localhost:5174"
     ], // specify your frontend origins as an array
     credentials: true // allow cookies and credentials
