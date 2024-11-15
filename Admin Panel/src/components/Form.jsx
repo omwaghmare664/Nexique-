@@ -45,7 +45,7 @@ function Form() {
     setLoading(true); // Set loading to true
   
     try {
-      const response = await axios.post("http://localhost:5500/product/add", data, {
+      const response = await axios.post("https://nexique-backend.onrender.com/product/add", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage(response.data.message || "Product added successfully!");
