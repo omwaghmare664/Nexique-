@@ -1,35 +1,29 @@
 const productModel = require("../models/ProductModel");
 const multer = require("multer");
 const path = require("path");
+const { uploadProduct } = require("../middlewares/upload");
+const cloudinary = require("../services/cloudinary");
 
-// Set up storage for product images
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/product"); // Path to the product folder inside uploads
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name with extension
-  },
-});
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image files are allowed"), false);
+const uploadImageToCloudinary = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath);
+    return result.secure_url;
+  } catch (error) {
+    console.log("Error uploading image to Cloudinary: ", error);
+    throw new Error("Error uploading image");
   }
 };
 
-// Initialize upload
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
-});
-
-addProduct = async (req, res) => {
+const addProduct = async (req, res) => {
   const { name, description, category, price } = req.body;
-  const productImage = req.file ? req.file.path : null;
+  const productImage = req.file ? await uploadImageToCloudinary(req.file.path) : null;
 
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No file uploaded" });
+  }
+  
+  console.log(req.file); // Logs the uploaded file
+  console.log(req.body); // Logs other form fields
   try {
     const product = await productModel.create({
       productImage: productImage, // Use the file path for the image
@@ -61,7 +55,7 @@ const removeProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, description, category, price } = req.body;
-  const productImage = req.file ? req.file.path : null;
+  const productImage = req.file ? await uploadImageToCloudinary(req.file.path) : null;
 
   try {
     const product = await productModel.findById(id);
@@ -133,6 +127,6 @@ module.exports = {
   removeProduct,
   updateProduct,
   getAllProducts,
-  upload,
+  uploadProduct,
   getProductsByPrice,
 };

@@ -53,7 +53,7 @@ function Navbar() {
         </Link>
         <Link to="/order">
           <div className="home_navbar_cart relative p-3 bg-gray-600 rounded-full cursor-pointer">
-            <FaBoxesPacking className="text-2xl text-white" title="Cart" />
+            <FaBoxesPacking className="text-2xl text-white" title="Orders" />
             
           </div>
         </Link>
@@ -61,7 +61,7 @@ function Navbar() {
           <div className="relative p-[3px] bg-gray-200 rounded-sm cursor-pointer">
             {user?.profilePicture ? (
               <img
-                src={backend_products_url + user.profilePicture}
+                src={user.profilePicture}
                 className="w-9"
                 alt="Profile"
               />

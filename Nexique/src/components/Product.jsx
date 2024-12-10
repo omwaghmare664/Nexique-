@@ -57,7 +57,7 @@ function Product({ name, description, price, image, id }) {
     <div className="max-w-[250px] max-h-[400px] bg-white text-black rounded-lg border border-gray-200 shadow-md overflow-hidden p-4 hover:shadow-xl transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer">
       <div className="relative mb-3">
         <img
-          src={`${PORT}/${image}`}
+          src={`${image}`}
           alt={name}
           className="w-full h-40 object-contain rounded-md border border-gray-100"
         />

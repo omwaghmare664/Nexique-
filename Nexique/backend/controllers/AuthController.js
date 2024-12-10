@@ -5,39 +5,26 @@ const validator = require("validator");
 const multer = require("multer");
 const path = require("path");
 
-// Set up storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/profile"); // Ensure this directory exists
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
+const { uploadProfile} = require("../middlewares/upload");
+const cloudinary = require("../services/cloudinary");
 
-// File filter to allow only image uploads
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image files are allowed"), false);
+const uploadImageToCloudinary = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath);
+    return result.secure_url;
+  } catch (error) {
+    console.log("Error uploading image to Cloudinary: ", error);
+    throw new Error("Error uploading image");
   }
 };
 
-// Initialize upload
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
-});
-
-module.exports = { upload };
-
-
-
 const signUpController = async (req, res) => {
   const { name, email, password, address } = req.body;
-  const profilePicture = req.file ? `/uploads/profile/${req.file.filename}` : null;
+  const profilePicture = req.file ? await uploadImageToCloudinary(req.file.path) : null;
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No file uploaded" });
+  }
+  
 
   try {
     const exists = await UserModel.findOne({ email });
@@ -49,7 +36,7 @@ const signUpController = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await UserModel.create({
-      profilePicture,
+      profilePicture: profilePicture,
       name,
       email,
       password: hashedPassword,
@@ -136,7 +123,7 @@ const deleteUserController = async (req, res) => {
 const updateUserController = async (req, res) => {
   const { id } = req.params;
   const { name, email, password, address } = req.body;
-  const profilePicture = req.file ? `/uploads/profile/${req.file.filename}` : undefined;
+  const profilePicture = req.file ? req.file.path : undefined;
 
   try {
     let updateData = { name, email, address };
@@ -187,6 +174,5 @@ module.exports = {
   deleteUserController,
   updateUserController,
   getAllUsers,
-  logoutUser,
-  upload
+  logoutUser
 };

@@ -27,9 +27,13 @@ function Order() {
         const response = await fetch(
           `${backend_products_url}/order/getUserOrders/${user.id}`
         );
-        if (!response.ok) throw new Error("Failed to fetch orders");
+        
         const data = await response.json();
         setOrders(Array.isArray(data.orders) ? data.orders : []);
+        // if response is 201 
+        if (response.status === 404) {
+          setError(data.message)
+        }
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -46,7 +50,7 @@ function Order() {
         Loading...
       </div>
     );
-  if (error) return <div className="text-center text-red-500">{error}</div>;
+  
 
   const toggleOrderDetails = (orderId) => {
     setSelectedOrder(selectedOrder === orderId ? null : orderId);
@@ -58,16 +62,16 @@ function Order() {
       <div className="min-h-screen bg-gray-100 py-10">
         <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-            Your Orders
+            Your Orders 
           </h2>
-          {orders === 0 ? (
-            <div className="text-center text-gray-500">No orders found.</div>
+          {error != null ? (
+            <div className="text-center text-gray-500">User has dosen't placed any order!</div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-6 flex flex-col-reverse gap-3">
               {orders.map((order) => (
                 <div
                   key={order._id}
-                  className="p-6 bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer hover:ring-2 hover:ring-green-500"
+                  className="p-6 bg-white rounded-lg shadow-lg  hover:shadow-lg transition-all duration-300 cursor-pointer hover:ring-2 hover:ring-green-500"
                   onClick={() => toggleOrderDetails(order._id)}
                 >
                   <h3 className="text-xl font-semibold text-gray-800 mb-3">
@@ -127,7 +131,7 @@ function Order() {
                               >
                                 <div className="flex items-center space-x-4">
                                   <img
-                                    src={`${backend_url}/${item.productId.productImage}`}
+                                    src={`${item.productId.productImage}`}
                                     alt={item.productId.name}
                                     className="w-16 h-16 object-cover rounded-lg"
                                   />

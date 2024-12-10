@@ -5,7 +5,7 @@ import { FaCheckCircle, FaTimesCircle, FaHourglass } from "react-icons/fa";
 import { gsap } from "gsap";
 
 function Orders() {
-  const BACKEND_PORT = "https://nexique-backend.onrender.com";
+  const BACKEND_PORT = "http://localhost:5500";
   const [orders, setOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
@@ -160,7 +160,8 @@ function Orders() {
                         <ul className="list-disc pl-5">
                           {order.items.map((item) => (
                             <li key={item._id}>
-                              {item.name} - Qty: {item.quantity}, Price: ₹{item.price}
+                              {item.name} - Qty: {item.quantity}, Price: ₹{item.price},
+                              Products Id: {item._id}
                             </li>
                           ))}
                         </ul>

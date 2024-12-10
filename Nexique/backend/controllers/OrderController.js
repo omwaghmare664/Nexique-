@@ -53,8 +53,8 @@ const getUserOrders = async (req, res) => {
         if (!orders || orders.length === 0) {
             return res.status(404).json({
                 status: 404,
-                message: "No orders found for this user.",
-            });
+                message: "User don't have place any order yet",
+            })
         }
 
         return res.status(200).json({

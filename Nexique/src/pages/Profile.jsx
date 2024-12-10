@@ -47,7 +47,7 @@ function Profile() {
                 <img src={user.image} alt="User" className="w-full h-full" />
               ) : (
                 <img
-                  src={`${backend_products_url}${user.profilePicture}`}
+                  src={`${user.profilePicture}`}
                   alt="Profile"
                 />
               )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'; // Ensure to install moment with `npm install moment`
 
 function AllUsers() {
-    const BACKEND_PORT = 'https://nexique-backend.onrender.com';
+    const BACKEND_PORT = 'http://localhost:5500';
     const [users, setUsers] = useState([]);
 
     // Fetch users

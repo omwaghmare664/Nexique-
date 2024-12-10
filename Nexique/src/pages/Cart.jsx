@@ -151,7 +151,7 @@ function Cart() {
                     <tr key={item._id}>
                       <td className="p-4 flex items-center gap-4">
                         <img
-                          src={`${backend_products_url}/${item.product.productImage}`}
+                          src={`${item.product.productImage}`}
                           alt="Product"
                           className="w-16 h-16 rounded-md object-contain"
                         />
