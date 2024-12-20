@@ -21,7 +21,7 @@ const ProductShow = () => {
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5500/product/getOne/${id}`
+          `${PORT}/product/getOne/${id}`
         );
         const data = await response.json(); // Parse the response as JSON
 
