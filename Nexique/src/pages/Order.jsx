@@ -2,9 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { MdClose } from "react-icons/md";
-import { FaCheckCircle, FaClock, FaExclamationCircle } from "react-icons/fa"; // Import icons
+import {
+  FaCheckCircle,
+  FaClock,
+  FaExclamationCircle,
+  FaTruck,
+  FaShippingFast,
+  FaUndoAlt,
+} from "react-icons/fa"; // Import necessary icons
 import BackHome from "../components/BackHome";
 import { backend_url } from "../contexts/StoredContext";
+import Navbar from "../components/Navbar";
 
 function Order() {
   const { user } = useContext(UserContext);
@@ -27,12 +35,14 @@ function Order() {
         const response = await fetch(
           `${backend_products_url}/order/getUserOrders/${user.id}`
         );
-        
-        const data = await response.json();
-        setOrders(Array.isArray(data.orders) ? data.orders : []);
-        // if response is 201 
-        if (response.status === 404) {
-          setError(data.message)
+
+        if (!response.ok) {
+          const data = await response.json();
+          setError(data.message || "Failed to fetch orders");
+          setOrders([]);
+        } else {
+          const data = await response.json();
+          setOrders(Array.isArray(data.orders) ? data.orders : []);
         }
         setLoading(false);
       } catch (error) {
@@ -44,62 +54,94 @@ function Order() {
     fetchOrders();
   }, [user.id, backend_products_url]);
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
-  
+  const statusIcons = {
+    Pending: { icon: <FaClock className="text-yellow-500" />, label: "Pending" },
+    Confirmed: {
+      icon: <FaCheckCircle className="text-blue-500" />,
+      label: "Confirmed",
+    },
+    Shipped: {
+      icon: <FaShippingFast className="text-indigo-500" />,
+      label: "Shipped",
+    },
+    "Out for Delivery": {
+      icon: <FaTruck className="text-teal-500" />,
+      label: "Out for Delivery",
+    },
+    Delivered: {
+      icon: <FaCheckCircle className="text-green-500" />,
+      label: "Delivered",
+    },
+    Completed: {
+      icon: <FaCheckCircle className="text-green-700" />,
+      label: "Completed",
+    },
+    Cancelled: {
+      icon: <FaExclamationCircle className="text-red-500" />,
+      label: "Cancelled",
+    },
+    Returned: { icon: <FaUndoAlt className="text-orange-500" />, label: "Returned" },
+    "Failed Delivery": {
+      icon: <FaExclamationCircle className="text-gray-500" />,
+      label: "Failed Delivery",
+    },
+  };
 
   const toggleOrderDetails = (orderId) => {
     setSelectedOrder(selectedOrder === orderId ? null : orderId);
   };
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading your orders...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">{error}</p>
+      </div>
+    );
+
   return (
     <>
-      <BackHome />
-      <div className="min-h-screen bg-gray-100 py-10">
+      <Navbar />
+      <div className="min-h-screen bg-gray-100 py-10 mt-16">
         <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-            Your Orders 
+            Your Orders
           </h2>
-          {error != null ? (
-            <div className="text-center text-gray-500">User has dosen't placed any order!</div>
+          {orders.length === 0 ? (
+            <p className="text-center text-gray-500">
+              You haven’t placed any orders yet.
+            </p>
           ) : (
-            <div className="space-y-6 flex flex-col-reverse gap-3">
+            <div className="space-y-6 flex flex-col-reverse gap-3 ">
               {orders.map((order) => (
                 <div
                   key={order._id}
-                  className="p-6 bg-white rounded-lg shadow-lg  hover:shadow-lg transition-all duration-300 cursor-pointer hover:ring-2 hover:ring-green-500"
+                  className="p-6 bg-white rounded-lg shadow-lg hover:ring-2 hover:ring-green-500 transition-all cursor-pointer"
                   onClick={() => toggleOrderDetails(order._id)}
                 >
                   <h3 className="text-xl font-semibold text-gray-800 mb-3">
                     Order #{order._id}
                   </h3>
-                  <div className="space-y-2 text-gray-700">
-                    <p>
-                      <strong>Total Price:</strong> ${order.totalPrice}
-                    </p>
-                    <div className="flex items-center space-x-2">
-                      {order.status === "Delivered" && (
-                        <FaCheckCircle className="text-green-500" />
-                      )}
-                      {order.status === "Pending" && (
-                        <FaClock className="text-yellow-500" />
-                      )}
-                      {order.status === "Cancelled" && (
-                        <FaExclamationCircle className="text-red-500" />
-                      )}
-                      <span className="text-gray-700">{order.status}</span>
-                    </div>
-                  </div>
+            
 
+                  <p className="text-gray-700 font-medium">Date: {new Date(order.orderDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })} 
+                  </p>
+                  <p className="text-gray-700 font-medium">Time: {new Date(order.orderDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}   </p>
+                  <div className="flex items-center space-x-2 py-2">
+                    {statusIcons[order.status]?.icon}
+                    <span className="text-gray-700 text-xl font-bold">{order.status}</span>
+                  </div>
                   {selectedOrder === order._id && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-6 z-10">
-                      <div className="bg-white rounded-lg p-8 w-full max-w-lg relative transform transition-all duration-500 scale-105">
+                      <div className="bg-white rounded-lg p-8 w-full max-w-lg relative">
                         <MdClose
-                          className="absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer hover:text-green-500 transition-all"
+                          className="absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer hover:text-green-500"
                           onClick={() => setSelectedOrder(null)}
                         />
                         <h4 className="font-semibold text-gray-800 mb-4">
@@ -126,12 +168,12 @@ function Order() {
                           <ul className="space-y-4">
                             {order.items.map((item) => (
                               <li
-                                key={item._id}
-                                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm hover:bg-green-100 transition-all"
+                                key={`${order._id}-${item._id}`}
+                                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm"
                               >
                                 <div className="flex items-center space-x-4">
                                   <img
-                                    src={`${item.productId.productImage}`}
+                                    src={item.productId.productImage}
                                     alt={item.productId.name}
                                     className="w-16 h-16 object-cover rounded-lg"
                                   />
@@ -140,7 +182,7 @@ function Order() {
                                   </span>
                                 </div>
                                 <span className="text-gray-600">
-                                  ${item.price * item.quantity}
+                                  ₹{item.price * item.quantity}
                                 </span>
                               </li>
                             ))}

@@ -65,7 +65,9 @@ function Orders() {
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-50 text-gray-900">
-      <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">Orders</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
+        Orders
+      </h1>
 
       {/* Filter Section */}
       <div className="flex justify-center mb-6">
@@ -76,8 +78,23 @@ function Orders() {
         >
           <option value="all">All</option>
           <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="shipped">Shipped</option>
+          <option value="out for delivery">Out For Delivery</option>
+          <option value="delivered">Delivered</option>
           <option value="completed">Completed</option>
           <option value="cancelled">Cancelled</option>
+          <option value="returned">Returned</option>
+          <option value="failed delivery">Failed Delivery</option>
+          {/* "Pending",
+            "Confirmed",
+            "Shipped",
+            "Out for Delivery",
+            "Delivered",
+            "Completed",
+            "Cancelled",
+            "Returned",
+            "Failed Delivery" */}
         </select>
       </div>
 
@@ -107,13 +124,21 @@ function Orders() {
                   )}
                   <select
                     value={order.status}
-                    onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                    onChange={(e) =>
+                      handleStatusChange(order._id, e.target.value)
+                    }
                     className="bg-gray-100 border border-gray-300 text-gray-700 p-2 rounded-md w-full transition duration-300 ease-in-out hover:border-gray-500"
                     disabled={order.status === "Completed"} // Disable if order is completed
                   >
                     <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Out for Delivery">Out For Delivery</option>
+                    <option value="Delivered">Delivered</option>
                     <option value="Completed">Completed</option>
                     <option value="Cancelled">Cancelled</option>
+                    <option value="Returned">Returned</option>
+                    <option value="Failed Delivery">Failed Delivery</option>
                   </select>
                 </td>
 
@@ -144,7 +169,10 @@ function Orders() {
                   <td colSpan="5" className="p-6">
                     <div className="space-y-3 text-sm">
                       <p>
-                        <strong>Order Date:</strong> {moment(order.orderDate).format("MMMM Do YYYY, h:mm:ss a")}
+                        <strong>Order Date:</strong>{" "}
+                        {moment(order.orderDate).format(
+                          "MMMM Do YYYY, h:mm:ss a"
+                        )}
                       </p>
                       <p>
                         <strong>Payment Method:</strong> {order.paymentMethod}
@@ -152,7 +180,11 @@ function Orders() {
                       <div>
                         <strong>Shipping Address:</strong>
                         <p>
-                          {order.shippingAddress.street}, {order.shippingAddress.city}, {order.shippingAddress.state}, {order.shippingAddress.postalCode}, {order.shippingAddress.country}
+                          {order.shippingAddress.street},{" "}
+                          {order.shippingAddress.city},{" "}
+                          {order.shippingAddress.state},{" "}
+                          {order.shippingAddress.postalCode},{" "}
+                          {order.shippingAddress.country}
                         </p>
                       </div>
                       <div>
@@ -160,8 +192,8 @@ function Orders() {
                         <ul className="list-disc pl-5">
                           {order.items.map((item) => (
                             <li key={item._id}>
-                              {item.name} - Qty: {item.quantity}, Price: ₹{item.price},
-                              Products Id: {item._id}
+                              {item.name} - Qty: {item.quantity}, Price: ₹
+                              {item.price}, Products Id: {item._id}
                             </li>
                           ))}
                         </ul>

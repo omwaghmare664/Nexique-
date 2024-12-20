@@ -48,7 +48,10 @@ function Form() {
       const response = await axios.post("http://localhost:5500/product/add", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setMessage(response.data.message || "Product added successfully!");
+      if (response.ok){
+        setMessage(response.data.message || "Product added successfully!");
+        setTimeout(() => setMessage(""), 3000);
+      }
       setFormData({ name: "", description: "", category: "", price: "" });
       setImage(null);
       setPreview(null);

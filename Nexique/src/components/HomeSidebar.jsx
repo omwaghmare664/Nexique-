@@ -13,14 +13,14 @@ function HomeSidebar({ setSelectedCategory, setSelectedPrice, applyFilters }) {
   };
 
   return (
-    <div className="home_sidebar w-[300px] h-full bg-white border-r border-r-gray-200 p-5 flex flex-col gap-5">
+    <div className="home_sidebar w-[200px] h-full bg-white border-r border-r-gray-200 p-5 flex flex-col gap-5">
       <div className="w-full max-w-xs mx-auto">
-        <label className="block text-gray-700 text-sm font-semibold mb-2">
+        <label className="block text-gray-700 text-[12px] font-semibold mb-2">
           Category
         </label>
         <div className="relative">
           <select
-            className="w-full border border-gray-300 rounded-lg p-3 pl-4 pr-10 mt-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none transition duration-300 ease-in-out transform"
+            className="w-full border border-gray-300 rounded-lg p-2 pl-2 pr-10 mt-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none transition duration-300 ease-in-out transform"
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
             <option value="All">All</option>
@@ -84,14 +84,14 @@ function HomeSidebar({ setSelectedCategory, setSelectedPrice, applyFilters }) {
       </div>
 
       <button
-        className="px-3 py-2 bg-black text-white rounded-lg mt-4 transition-all hover:bg-[#000000e8]"
+        className="px-2 py-2 bg-black text-white rounded-[2px] mt-4 text-sm transition-all hover:bg-[#000000e8]"
         onClick={applyFilters}
       >
         Apply
       </button>
 
       <button
-        className="px-3 py-2 bg-red-500 text-white rounded-lg mt-2 transition-all hover:bg-red-600"
+        className="px-2 py-2 bg-gray-200 text-gray-800 rounded-[4px] mt-2 transition-all hover:bg-gray-300"
         onClick={resetFilters}
       >
         Reset Filters

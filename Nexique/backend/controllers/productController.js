@@ -16,12 +16,16 @@ const uploadImageToCloudinary = async (filePath) => {
 
 const addProduct = async (req, res) => {
   const { name, description, category, price } = req.body;
-  const productImage = req.file ? await uploadImageToCloudinary(req.file.path) : null;
+  const productImage = req.file
+    ? await uploadImageToCloudinary(req.file.path)
+    : null;
 
   if (!req.file) {
-    return res.status(400).json({ success: false, message: "No file uploaded" });
+    return res
+      .status(400)
+      .json({ success: false, message: "No file uploaded" });
   }
-  
+
   console.log(req.file); // Logs the uploaded file
   console.log(req.body); // Logs other form fields
   try {
@@ -55,7 +59,9 @@ const removeProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, description, category, price } = req.body;
-  const productImage = req.file ? await uploadImageToCloudinary(req.file.path) : null;
+  const productImage = req.file
+    ? await uploadImageToCloudinary(req.file.path)
+    : null;
 
   try {
     const product = await productModel.findById(id);
@@ -122,6 +128,28 @@ const getProductsByPrice = async (req, res) => {
   }
 };
 
+const getProductById = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await productModel.findById(productId);
+    if (!product) {
+      return res
+        .status(404)
+        .json({
+          success: false,
+          message: "Product not found, please enter valid id of product!",
+        });
+    }
+    return res.json({
+      success: true,
+      message: "Product fetched successfully",
+      product,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
 module.exports = {
   addProduct,
   removeProduct,
@@ -129,4 +157,5 @@ module.exports = {
   getAllProducts,
   uploadProduct,
   getProductsByPrice,
+  getProductById,
 };

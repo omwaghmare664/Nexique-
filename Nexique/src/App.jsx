@@ -16,6 +16,7 @@ import NotFound from "./NotFound";
 import { UserProvider } from "./contexts/UserContext";
 import  ProtectedRoute  from "./components/ProtectRoute";
 import Proceed from "./pages/Proceed";
+import ProductShow from "./pages/ProductShow";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute><Proceed /></ProtectedRoute>} />
+          <Route path="/product/:id" element={<ProtectedRoute><ProductShow /></ProtectedRoute>} />
 
 
         {/* 404 */}

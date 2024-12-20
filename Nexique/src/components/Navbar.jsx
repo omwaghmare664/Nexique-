@@ -36,11 +36,12 @@ function Navbar() {
   
 
   return (
-    <div className="absolute top-0 left-0 z-50 bg-white w-full py-4 flex items-center justify-between px-12 border-b-2">
-      <div className="flex items-center justify-center gap-2">
+    <div className="absolute top-0 left-0 z-50 bg-white w-full py-2 flex items-center justify-between px-12 border-b-2">
+      <Link to="/">
+      <div className="flex items-center cursor-pointer justify-center gap-2">
         <img className="w-[65px] h-auto" src="/Nexique2.png" alt="Logo" />
         <span className="font-[Poppins] font-bold text-2xl">Nexique</span>
-      </div>
+      </div></Link>
       <ul className="flex items-center justify-center gap-7 mr-10">
         <Link to="/cart">
           <div className="home_navbar_cart relative p-3 bg-black rounded-full cursor-pointer">

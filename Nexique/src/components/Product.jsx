@@ -54,7 +54,7 @@ function Product({ name, description, price, image, id }) {
   };
 
   return (
-    <div className="max-w-[250px] max-h-[400px] bg-white text-black rounded-lg border border-gray-200 shadow-md overflow-hidden p-4 hover:shadow-xl transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer">
+    <div className="max-w-[250px] max-h-[400px] bg-white text-black rounded-[3px] border border-gray-200  overflow-hidden p-4 transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer">
       <div className="relative mb-3">
         <img
           src={`${image}`}

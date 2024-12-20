@@ -6,11 +6,13 @@ import Product from "../components/Product";
 import {backend_url} from '../contexts/StoredContext'
 import { UserContext } from "../contexts/UserContext";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { user } = useContext(UserContext);
   const backend_products_url = backend_url
 
+  const navigate = useNavigate()
   const [products, setProducts] = useState([]); // State to hold fetched products
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState(null); // State to handle errors
@@ -60,6 +62,9 @@ function Home() {
 
   if (loading) return <div>Loading...</div>; // Display loading state
   if (error) return <div>{error}</div>; // Display error message
+  const handleProductClick = (id) => {
+    navigate(`/product/${id}`); // Use navigate to change route
+  };
 
   return (
     <>
@@ -71,16 +76,21 @@ function Home() {
             setSelectedPrice={setSelectedPrice}
             applyFilters={applyFilters}
           />
-          <div className="products p-10 bg-white w-full h-full flex flex-wrap gap-5 items-start justify-center">
+          <div className="products p-10 bg-white w-full h-full flex flex-wrap gap-5 items-start justify-center max-h-[84vh] overflow-auto">
             {filteredProducts.map((product) => ( // Map through filtered products and display them
+              <div
+              key={product._id}
+              onClick={() => handleProductClick(product._id)} // Log product ID when clicked
+              className="cursor-pointer"
+            >
               <Product
-                key={product._id}
                 id={product._id}
                 name={product.name}
                 description={product.description}
                 price={product.price}
                 image={product.productImage}
               />
+            </div>
             ))}
           </div>
         </div>

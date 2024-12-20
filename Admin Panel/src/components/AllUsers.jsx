@@ -30,7 +30,7 @@ function AllUsers() {
                         >
                             {/* Profile Picture */}
                             <img
-                                src={`${BACKEND_PORT}${user.profilePicture}`}
+                                src={`${user.profilePicture}`}
                                 alt={`${user.name}'s profile`}
                                 className="w-12 h-12 rounded-full mr-4 border-2 border-white"
                             />

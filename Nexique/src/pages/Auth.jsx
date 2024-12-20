@@ -15,7 +15,6 @@ function Auth() {
         <Login state={state} setState={setState} />
         :
         <Signup state={state} setState={setState} />
-
       }
     </div>
   )
