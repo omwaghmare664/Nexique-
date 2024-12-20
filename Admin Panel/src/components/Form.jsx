@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function Form() {
+  const BACKEND_URL = 'https://nexique-admin.onrender.com'
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ function Form() {
     setLoading(true); // Set loading to true
   
     try {
-      const response = await axios.post("http://localhost:5500/product/add", data, {
+      const response = await axios.post(`${BACKEND_URL}/product/add`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (response.ok){
