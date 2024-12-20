@@ -5,7 +5,7 @@ import { FaCheckCircle, FaTimesCircle, FaHourglass } from "react-icons/fa";
 import { gsap } from "gsap";
 
 function Orders() {
-  const BACKEND_PORT = "http://localhost:5500";
+  const BACKEND_PORT = "https://nexique-admin.onrender.com";
   const [orders, setOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
