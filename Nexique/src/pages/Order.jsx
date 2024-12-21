@@ -22,10 +22,13 @@ function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const navigate = useNavigate();
   const backend_products_url = backend_url;
+  const userLocal = JSON.parse(localStorage.getItem("user"));
+  const userId = userLocal._id;
+  console.log(userId)
 
   useEffect(() => {
-    if (!user || !user.id) {
-      setError("User not found");
+    if (!userId) {
+      setError("User not Sign In, please login");
       setLoading(false);
       return;
     }
@@ -33,7 +36,7 @@ function Order() {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backend_products_url}/order/getUserOrders/${user.id}`
+          `${backend_products_url}/order/getUserOrders/${userId}`
         );
 
         if (!response.ok) {
