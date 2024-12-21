@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function Form() {
-  const BACKEND_URL = 'https://nexique-admin.onrender.com'
+  const BACKEND_URL = 'https://nexique-backend.onrender.com'
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [formData, setFormData] = useState({
