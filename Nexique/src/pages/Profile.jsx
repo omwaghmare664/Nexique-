@@ -11,7 +11,7 @@ function Profile() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // Track loading state
   const userLocal = JSON.parse(localStorage.getItem("user"));
-  const userId = userLocal.id;
+  const userId = userLocal._id;
 
   // Fetch user details in real-time
   useEffect(() => {
