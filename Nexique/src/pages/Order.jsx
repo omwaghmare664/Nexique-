@@ -23,6 +23,9 @@ function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const navigate = useNavigate();
   const backend_products_url = backend_url;
+  const userLocal = JSON.parse(localStorage.getItem("user"));
+  const userId = userLocal.id;
+  console.log(userId)
 
   useEffect(() => {
     if (!user._id) {
@@ -34,7 +37,7 @@ function Order() {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backend_products_url}/order/getUserOrders/${user._id}`
+          `${backend_products_url}/order/getUserOrders/${user.id}`
         );
 
         if (!response.ok) {

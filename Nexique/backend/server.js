@@ -16,8 +16,8 @@ app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 app.use(cors({
     origin: [
-        "http://localhost:5173",
-        "http://localhost:5174"
+        "https://nexique.onrender.com",
+        "https://nexique-admin.onrender.com"
     ], // specify your frontend origins as an array
     credentials: true // allow cookies and credentials
 }));
