@@ -283,3 +283,26 @@ body {
   opacity: 1;
   border-radius: 20px;
 }
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  transition: .4s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(83, 83, 83, 0.096);
+  border-radius: 10px;
+  transition: .4s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #33333377;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f127;
+  border-radius: 10px;
+}

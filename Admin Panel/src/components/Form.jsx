@@ -56,7 +56,9 @@ function Form() {
       setImage(null);
       setPreview(null);
     } catch (error) {
-      setMessage("Failed to add product. Please try again.");
+      setTimeout(() => {
+        setMessage("Failed to add product. Please try again.");
+      }, setMessage(''), 3000);
       console.error("Error adding product:", error);
     } finally {
       setLoading(false); // Reset loading state

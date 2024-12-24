@@ -4,13 +4,14 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const multer = require("multer");
 const path = require("path");
-
 const { uploadProfile } = require("../middlewares/upload");
 const cloudinary = require("../services/cloudinary");
 
 const uploadImageToCloudinary = async (filePath) => {
   try {
-    const result = await cloudinary.uploader.upload(filePath);
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: "nexique",
+    });
     return result.secure_url;
   } catch (error) {
     console.log("Error uploading image to Cloudinary: ", error);
@@ -108,7 +109,7 @@ const loginController = async (req, res) => {
       message: "Login successful",
       token,
       user: {
-        id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
         profilePicture: user.profilePicture,

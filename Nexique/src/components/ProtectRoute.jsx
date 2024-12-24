@@ -1,4 +1,4 @@
-// ProtectedRoute.js
+
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,9 @@ const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      // If user is not authenticated, navigate to /getstarted
+    const localStorageUser = localStorage.getItem('user');
+    if (!user && !localStorageUser) {
+      // If user is not authenticated and not in local storage, navigate to /getstarted
       navigate('/getstarted');
     }
   }, [user, navigate]);

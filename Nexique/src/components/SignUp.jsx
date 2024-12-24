@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { backend_url } from "../contexts/StoredContext";
 
-function SignUp({ state, setState }) {
+function SignUp({ state, setState, onSuccessfulSignup }) {
   const [avatar, setAvatar] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -48,6 +48,7 @@ function SignUp({ state, setState }) {
       
       if (response.data.success) {
         setUser(response.data.user); // Save user data to context
+        onSuccessfulSignup()
         window.location.reload();
       } else {
         setError(response.data.message); // Display error from backend

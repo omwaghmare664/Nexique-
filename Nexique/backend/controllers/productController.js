@@ -6,7 +6,9 @@ const cloudinary = require("../services/cloudinary");
 
 const uploadImageToCloudinary = async (filePath) => {
   try {
-    const result = await cloudinary.uploader.upload(filePath);
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: "nexique",
+    });
     return result.secure_url;
   } catch (error) {
     console.log("Error uploading image to Cloudinary: ", error);

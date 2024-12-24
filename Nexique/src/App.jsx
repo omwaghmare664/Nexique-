@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import nprogress from "nprogress";
-import "nprogress/nprogress.css";
 
 // Import your pages
 import Land from "./pages/Land";
@@ -11,41 +9,94 @@ import Order from "./pages/Order";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./NotFound";
-
-// Import your contexts
-import { UserProvider } from "./contexts/UserContext";
-import  ProtectedRoute  from "./components/ProtectRoute";
 import Proceed from "./pages/Proceed";
 import ProductShow from "./pages/ProductShow";
 
+// Import your components
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectRoute";
+
+// Import your contexts
+import { UserProvider } from "./contexts/UserContext";
+
+const LayoutWithNavbar = ({ children }) => (
+  <>
+    <Navbar />
+    {children}
+  </>
+);
+
 function App() {
-  const location = useLocation();
-
-  useEffect(() => {
-    nprogress.start();
-
-    nprogress.done();
-
-    return () => {
-      nprogress.done();
-    };
-  }, [location]);
+  
 
   return (
     <UserProvider>
       <Routes>
+        {/* Routes without Navbar */}
         <Route path="/getstarted" element={<Land />} />
         <Route path="/auth" element={<Auth />} />
 
-        {/* Protected Routes */}
+        {/* Protected Routes with Navbar */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <LayoutWithNavbar>
+                <Home />
+              </LayoutWithNavbar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <ProtectedRoute>
+              <LayoutWithNavbar>
+                <Order />
+              </LayoutWithNavbar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <ProtectedRoute>
+              <LayoutWithNavbar>
+                <ProductShow />
+              </LayoutWithNavbar>
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
-          <Route path="/checkout" element={<ProtectedRoute><Proceed /></ProtectedRoute>} />
-          <Route path="/product/:id" element={<ProtectedRoute><ProductShow /></ProtectedRoute>} />
-
+        {/* Protected Routes without Navbar */}
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <LayoutWithNavbar>
+                <Cart />
+              </LayoutWithNavbar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <LayoutWithNavbar>
+                <Profile />
+              </LayoutWithNavbar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Proceed />
+            </ProtectedRoute>
+          }
+        />
 
         {/* 404 */}
         <Route path="/*" element={<NotFound />} />

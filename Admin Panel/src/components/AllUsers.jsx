@@ -25,7 +25,7 @@ function AllUsers() {
                 {users.length > 0 ? (
                     users.map(user => (
                         <li
-                            key={user._id}
+                            key={user.id}
                             className="flex items-center bg-gray-900 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                         >
                             {/* Profile Picture */}

@@ -4,21 +4,19 @@ import BackHome from "../components/BackHome";
 import { IoIosLogOut } from "react-icons/io";
 import axios from "axios";
 import { backend_url } from "../contexts/StoredContext";
+import Loader from "../components/Loader";
 
 function Profile() {
   const backend_products_url = backend_url;
   const { user, setUser } = useContext(UserContext); // Ensure `setUser` is available in context
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // Track loading state
-  const userLocal = JSON.parse(localStorage.getItem("user"));
-  const userId = userLocal._id;
-
   // Fetch user details in real-time
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `${backend_products_url}/auth/user/${userId}`,
+          `${backend_products_url}/auth/user/${user._id}`,
           { withCredentials: true }
         ); // Fetch user details from backend
         setUser(response.data.user); // Update user context
@@ -37,8 +35,8 @@ function Profile() {
     axios
       .get(`${backend_products_url}/auth/logout`, { withCredentials: true })
       .then(() => {
-        localStorage.clear(); // Clear local storage
-        window.location.href = "/auth"; // Redirect to login page
+        setUser(null); // Clear user context
+        window.location.href = "/getstarted"; // Redirect to login page
       })
       .catch((error) => {
         setError("Logout failed: " + error.message);
@@ -47,9 +45,10 @@ function Profile() {
 
   if (loading)
     return (
-      <div className="w-full h-screen flex items-center justify-center text-2xl">
-        Loading...
-      </div>
+      <div className="w-full h-screen fixed top-0 left-0 z-50 flex flex-col items-center justify-center gap-10">
+    <Loader />
+    <h2>Loading...</h2>
+  </div>
     ); // Loading state
   if (error)
     return (
@@ -60,9 +59,8 @@ function Profile() {
 
   return (
     <>
-      <BackHome />
-      <div className="w-full h-screen bg-[#F3F4F6] flex items-center justify-center">
-        <div className="w-[60%] bg-white rounded shadow-lg shadow-[#0000001a] flex mt-10 flex-col items-center justify-start py-10">
+      <div className="w-full h-screen bg-[#F3F4F6] flex items-center  justify-center">
+        <div className="w-[60%] bg-white rounded shadow-lg shadow-[#0000001a]  flex mt-24 flex-col items-center justify-start py-10 ">
           {/* Security Notice */}
           <div className="w-[90%] h-16 p-2 bg-red-100 border border-[#ff3d3d41] rounded-sm flex items-center justify-center gap-5 px-5">
             <span className="text-xl text-red-600">⚠</span>

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext"; // Import UserContext to access user ID
 import { backend_url } from "../contexts/StoredContext";
 
-function Product({ name, description, price, image, id }) {
+function Product({ name, description, price, image, id, handleProductClick }) {
   const PORT = backend_url;
   const { user } = useContext(UserContext); // Access user context to get user ID
 
@@ -15,31 +15,31 @@ function Product({ name, description, price, image, id }) {
   };
 
   const addToCart = async () => {
-    if (!user || !user.id) {
-      setErrorMessage("User ID is not available. Please log in."); // Set error message for user ID
+    if (!user || !user._id) {
+      setErrorMessage("User ID is not available. Please log in."); // Set error message for user D
       return;
     }
 
     try {
-      const response = await fetch(`${PORT}/cart/add/${user.id}`, {
+      const response = await fetch(`${PORT}/cart/add/${user._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          productId: id        
+          productId: id,
         }),
       });
 
       if (response.ok) {
-        setSuccessMessage("Product added to cart!"); // Set success message
+        setSuccessMessage("Added to cart!"); // Set success message
         setErrorMessage(null); // Clear any previous error messages
         setTimeout(() => {
           setSuccessMessage(null); // Remove success message after 3 seconds
-        }, 3000);
+        }, 1000);
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Failed to add to cart'); // Set error message from response
+        setErrorMessage(errorData.message || "Failed to add to cart"); // Set error message from response
         setTimeout(() => {
           setErrorMessage(null); // Remove error message after 3 seconds
         }, 3000);
@@ -54,49 +54,48 @@ function Product({ name, description, price, image, id }) {
   };
 
   return (
-    <div className="max-w-[250px] max-h-[400px] bg-white text-black rounded-[3px] border border-gray-200  overflow-hidden p-4 transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer">
-      <div className="relative mb-3">
+    <div className="max-w-[250px] bg-white text-black rounded-lg border border-gray-200 shadow-sm overflow-hidden p-4 transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer lg:max-w-[300px] sm:max-w-[200px] md:max-w-[220px]">
+      <div className="relative mb-3 w-full">
         <img
           src={`${image}`}
           alt={name}
-          className="w-full h-40 object-contain rounded-md border border-gray-100"
+          onClick={() => handleProductClick(id)}
+          className="w-full h-40 object-contain rounded-md border border-gray-100 hover:scale-105 transition-transform"
         />
       </div>
 
       {/* Product Details */}
       <div className="text-left w-full">
-        <h1 className="text-[22px] font-semibold truncate">{name}</h1>
-        <p className="text-black text-xs mt-1 overflow-hidden text-ellipsis whitespace-nowrap max-w-xs">
-  {description}
-</p>
+        <h1 className="text-[18px] md:text-[20px] font-semibold truncate">{name}</h1>
+        <p className="text-black text-xs md:text-sm mt-1 overflow-hidden text-ellipsis whitespace-nowrap max-w-xs">
+          {description}
+        </p>
 
-        <p className="text-lg font-bold mt-2 ">
+        <p className="text-lg font-bold mt-2">
           <span className="mr-[5px]">₹</span>
           {formatPrice(price)}
         </p>
       </div>
 
       {/* Add to Cart Button */}
-      <div className="mt-4">
-        <button
+      <div className="mt-4 w-full">
+        {successMessage ? <button
           onClick={addToCart}
-          className="w-[150px] py-2 bg-black text-white rounded-md font-medium text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
+          className="w-full py-2 bg-green-600 text-white rounded-md font-medium text-sm hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
+        >
+          {successMessage}
+        </button> : <button
+          onClick={addToCart}
+          className="w-full py-2 bg-black text-white rounded-md font-medium text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
         >
           Add to Cart
-        </button>
+        </button>}
+
+        {errorMessage && <p className="text-red-500 text-sm mt-2">{errorMessage}</p>}
+
       </div>
 
-      {/* Error and Success Messages */}
-      {errorMessage && (
-        <div className="mt-2 p-2 bg-red-100 text-red-600 border border-red-300 rounded">
-          {errorMessage}
-        </div>
-      )}
-      {successMessage && (
-        <div className="mt-2 p-2 bg-green-100 text-green-600 border border-green-300 rounded">
-          {successMessage}
-        </div>
-      )}
+      
     </div>
   );
 }

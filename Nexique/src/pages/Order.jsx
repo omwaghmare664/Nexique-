@@ -13,6 +13,7 @@ import {
 import BackHome from "../components/BackHome";
 import { backend_url } from "../contexts/StoredContext";
 import Navbar from "../components/Navbar";
+import Loader from "../components/Loader";
 
 function Order() {
   const { user } = useContext(UserContext);
@@ -24,8 +25,8 @@ function Order() {
   const backend_products_url = backend_url;
 
   useEffect(() => {
-    if (!user || !user.id) {
-      setError("User not found");
+    if (!user._id) {
+      setError("User not Sign In, please login");
       setLoading(false);
       return;
     }
@@ -33,7 +34,7 @@ function Order() {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backend_products_url}/order/getUserOrders/${user.id}`
+          `${backend_products_url}/order/getUserOrders/${user._id}`
         );
 
         if (!response.ok) {
@@ -52,7 +53,7 @@ function Order() {
     };
 
     fetchOrders();
-  }, [user.id, backend_products_url]);
+  }, [user._id, backend_products_url]);
 
   const statusIcons = {
     Pending: { icon: <FaClock className="text-yellow-500" />, label: "Pending" },
@@ -93,9 +94,10 @@ function Order() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p>Loading your orders...</p>
-      </div>
+      <div className="w-full h-screen fixed top-0 left-0 z-50 flex flex-col items-center justify-center gap-10">
+    <Loader />
+    <h2>Loading...</h2>
+  </div>
     );
 
   if (error)
@@ -138,8 +140,8 @@ function Order() {
                     <span className="text-gray-700 text-xl font-bold">{order.status}</span>
                   </div>
                   {selectedOrder === order._id && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-6 z-10">
-                      <div className="bg-white rounded-lg p-8 w-full max-w-lg relative">
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-6 z-10 ">
+                      <div className="bg-white overflow-auto max-h-[400px] rounded-lg p-8 w-full max-w-lg relative">
                         <MdClose
                           className="absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer hover:text-green-500"
                           onClick={() => setSelectedOrder(null)}
