@@ -35,6 +35,7 @@ function Order() {
       try {
         const response = await fetch(
           `${backend_products_url}/order/getUserOrders/${user._id}`
+          `${backend_products_url}/order/getUserOrders/${user._id}`
         );
 
         if (!response.ok) {
