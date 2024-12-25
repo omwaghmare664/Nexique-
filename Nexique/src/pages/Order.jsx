@@ -130,7 +130,7 @@ function Order() {
                   className="p-6 bg-white rounded-lg shadow-lg hover:ring-2 hover:ring-green-500 transition-all cursor-pointer"
                   onClick={() => toggleOrderDetails(order._id)}
                 >
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                  <h3 className="text-[14px] sm:text-xl font-semibold text-gray-800 mb-3">
                     Order #{order._id}
                   </h3>
                   <p className="text-gray-700 font-medium">
