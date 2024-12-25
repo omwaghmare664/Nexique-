@@ -2,4 +2,4 @@ import React  from "react";
 
 
 
-export const backend_url  = "http://localhost:5500"
+export const backend_url  = "https://nexique-backend.onrender.com"
