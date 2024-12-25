@@ -104,9 +104,9 @@ function Cart() {
   if (loading) {
     return (
       <div className="w-full h-screen fixed top-0 left-0 z-50 flex flex-col items-center justify-center gap-10">
-    <Loader />
-    <h2>Loading...</h2>
-  </div>
+        <Loader />
+        <h2>Loading...</h2>
+      </div>
     );
   }
 
@@ -123,9 +123,9 @@ function Cart() {
   return (
     <div className="cart w-full h-full py-24 bg-gray-100">
       <div className="cart_content w-full h-full px-4 sm:px-6 md:px-10 lg:px-28 flex flex-col lg:flex-row items-start justify-center gap-6">
-        <div className="w-full lg:w-3/5 py-5 bg-white rounded-md shadow-lg shadow-[#0000001a]">
+        <div className="w-full lg:w-3/5 py-5 bg-white rounded-md shadow-lg">
           <h2 className="text-2xl font-bold px-4">Cart</h2>
-          <div className="cart_products max-w-full mx-auto my-8 p-4 bg-white rounded-lg overflow-x-auto">
+          <div className="cart_products w-full mx-auto my-8 p-4 bg-white rounded-lg overflow-x-auto">
             <table className="w-full table-auto text-left">
               <thead>
                 <tr className="border-b">
@@ -156,7 +156,7 @@ function Cart() {
                           alt="Product"
                           className="w-12 sm:w-16 h-12 sm:h-16 rounded-md object-contain"
                         />
-                        <span className="font-medium text-gray-800 text-sm sm:text-base">
+                        <span className="font-medium text-gray-800 text-sm sm:text-base truncate max-w-xs">
                           {item.product.name}
                         </span>
                       </td>
@@ -196,7 +196,7 @@ function Cart() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 w-full lg:w-2/5">
-          <div className="w-full py-5 px-4 sm:px-6 bg-white rounded-sm shadow-lg shadow-[#0000001a] space-y-4">
+          <div className="w-full py-5 px-4 sm:px-6 bg-white rounded-sm shadow-lg space-y-4">
             <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">
               Order Summary
             </h2>

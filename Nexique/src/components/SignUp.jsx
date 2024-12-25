@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { backend_url } from "../contexts/StoredContext";
 
+import MiniLoader from "./MiniLoader";
+
 function SignUp({ state, setState, onSuccessfulSignup }) {
   const [avatar, setAvatar] = useState(null);
   const [name, setName] = useState("");
@@ -11,6 +13,7 @@ function SignUp({ state, setState, onSuccessfulSignup }) {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { setUser } = useContext(UserContext); // Accessing UserContext
   const navigate = useNavigate(); // Hook for navigation
 
@@ -38,6 +41,7 @@ function SignUp({ state, setState, onSuccessfulSignup }) {
     formData.append("password", password);
     formData.append("address", address);
 
+    setLoading(true); // Enable loading state
     try {
       // Making the POST request to backend signup route
       const response = await axios.post(`${backend_url}/auth/signup`, formData, {
@@ -45,22 +49,28 @@ function SignUp({ state, setState, onSuccessfulSignup }) {
           "Content-Type": "multipart/form-data", // Required for file uploads
         },
       });
+      setLoading(true); // Enable loading state
       
       if (response.data.success) {
+        setLoading(false); // Disable loading state
         setUser(response.data.user); // Save user data to context
         onSuccessfulSignup()
         window.location.reload();
       } else {
+        setLoading(false); // Disable loading state
         setError(response.data.message); // Display error from backend
       }
       
     } catch (error) {
+      setLoading(false); // Disable loading state
       if (error.response) {
         setError(error.response.data.message); // Show server error
       } else {
         setError("Signup error, please try again."); // Handle generic error
       }
       console.error("Signup error:", error);
+    } finally {
+      setLoading(false); // Disable loading
     }
   };
 
@@ -74,7 +84,7 @@ function SignUp({ state, setState, onSuccessfulSignup }) {
   }, [avatar]);
 
   return (
-    <div className="auth_signup w-[400px] py-5 bg-white rounded-lg gap-5 shadow-lg p-3 shadow-[#0000001a]">
+    <div className="auth_signup w-[350px] sm:w-[400px] py-5 bg-white rounded-lg gap-5 shadow-lg p-3 shadow-[#0000001a]">
       <div className="w-full h-16 border-b-2 border-[#00000086] flex items-center justify-center">
         <h2 className="text-2xl font-bold">Create your Account</h2>
       </div>
@@ -129,11 +139,14 @@ function SignUp({ state, setState, onSuccessfulSignup }) {
           className="w-[90%] h-20 border-[1px] border-[#00000086] rounded-sm px-3 outline-none focus:border-[#1a1a1aec] transition-all resize-none p-2"
           required
         />
+        <div className="w-[90%] bg-[#1a1a1a] h-10 flex items-center justify-center ">
         <input
           type="submit"
-          className="w-[90%] h-10 bg-[#1a1a1a] rounded-sm text-white font-thin hover:bg-[#131313] cursor-pointer transition-all"
+          className=" text-white font-thin cursor-pointer w-full h-full rounded-sm"
           value="Sign Up"
         />
+        {loading && <MiniLoader />} {/* Display loader if loading state is true */}
+        </div>
         {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
       </form>
       <p className="w-full py-2 flex items-center justify-center text-[#00000086]">

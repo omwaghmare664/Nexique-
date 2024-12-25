@@ -4,7 +4,7 @@ function LandHome() {
   return (
     <div className="relative w-full h-screen flex justify-center items-center flex-col text-center gap-10 ">
       <div className=" flex justify-center items-center flex-col font-Geo text-center gap-6">
-        <div className="flex flex-col gap-5 text-5xl font-thin   heading  ">
+        <div className=" flex flex-col gap-5 text-2xl sm:text-3xl lg:text-5xl font-thin   heading  ">
           Creative, Traditional Designs, <br />
           Electronic Support.
         </div>
@@ -12,9 +12,9 @@ function LandHome() {
           <input
             type="text"
             placeholder="Search Products"
-            className="w-[350px] h-7 p-5 outline-none border-[1px] border-[#8a8a8a71] rounded-lg"
+            className="w-[150px] h-5 p-3 outline-none border-[1px] border-[#8a8a8a71] sm:w-[200px] lg:w-[300px] sm:p-4 lg:p-5"
           />
-          <button className="bg-[#000000] text-white py-[10px] px-6 rounded-lg">
+          <button className="bg-[#000000] text-white py-[2px] px-6 sm:py-2 sm:px-8 lg:py-3 lg:px-10 rounded-lg">
             Search
           </button>
         </div>

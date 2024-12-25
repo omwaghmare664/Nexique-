@@ -198,8 +198,7 @@ const getUserbyId = async (req, res) => {
     }
 
     // Use await to properly handle the promise returned by findById
-    const user = await UserModel.findById(userId);
-    
+    const user = await UserModel.findById(userId).select("-password"); // Exclude password from the response
 
     if (!user) {
       return res

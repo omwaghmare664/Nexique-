@@ -10,10 +10,10 @@ import {
   FaShippingFast,
   FaUndoAlt,
 } from "react-icons/fa"; // Import necessary icons
-import BackHome from "../components/BackHome";
 import { backend_url } from "../contexts/StoredContext";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
+import ErrorServer from "../components/ErrorServer";
 
 function Order() {
   const { user } = useContext(UserContext);
@@ -23,13 +23,10 @@ function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const navigate = useNavigate();
   const backend_products_url = backend_url;
-  const userLocal = JSON.parse(localStorage.getItem("user"));
-  const userId = userLocal.id;
-  console.log(userId)
 
   useEffect(() => {
     if (!user._id) {
-      setError("User not Sign In, please login");
+      setError("User not signed in, please login");
       setLoading(false);
       return;
     }
@@ -37,7 +34,7 @@ function Order() {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backend_products_url}/order/getUserOrders/${user.id}`
+          `${backend_products_url}/order/getUserOrders/${user._id}`
         );
 
         if (!response.ok) {
@@ -59,7 +56,10 @@ function Order() {
   }, [user._id, backend_products_url]);
 
   const statusIcons = {
-    Pending: { icon: <FaClock className="text-yellow-500" />, label: "Pending" },
+    Pending: {
+      icon: <FaClock className="text-yellow-500" />,
+      label: "Pending",
+    },
     Confirmed: {
       icon: <FaCheckCircle className="text-blue-500" />,
       label: "Confirmed",
@@ -84,7 +84,10 @@ function Order() {
       icon: <FaExclamationCircle className="text-red-500" />,
       label: "Cancelled",
     },
-    Returned: { icon: <FaUndoAlt className="text-orange-500" />, label: "Returned" },
+    Returned: {
+      icon: <FaUndoAlt className="text-orange-500" />,
+      label: "Returned",
+    },
     "Failed Delivery": {
       icon: <FaExclamationCircle className="text-gray-500" />,
       label: "Failed Delivery",
@@ -98,23 +101,20 @@ function Order() {
   if (loading)
     return (
       <div className="w-full h-screen fixed top-0 left-0 z-50 flex flex-col items-center justify-center gap-10">
-    <Loader />
-    <h2>Loading...</h2>
-  </div>
+        <Loader />
+        <h2>Loading...</h2>
+      </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-500">{error}</p>
-      </div>
+      <ErrorServer error={error} />
     );
 
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-100 py-10 mt-16">
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+      <div className="min-h-screen bg-gray-100 py-10">
+        <div className="w-full sm:max-w-4xl mx-auto bg-white p-6 rounded-lg sm:shadow-md mt-16">
           <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
             Your Orders
           </h2>
@@ -123,7 +123,7 @@ function Order() {
               You haven’t placed any orders yet.
             </p>
           ) : (
-            <div className="space-y-6 flex flex-col-reverse gap-3 ">
+            <div className="space-y-6 flex flex-col-reverse gap-3">
               {orders.map((order) => (
                 <div
                   key={order._id}
@@ -133,17 +133,30 @@ function Order() {
                   <h3 className="text-xl font-semibold text-gray-800 mb-3">
                     Order #{order._id}
                   </h3>
-            
-
-                  <p className="text-gray-700 font-medium">Date: {new Date(order.orderDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })} 
+                  <p className="text-gray-700 font-medium">
+                    Date:{" "}
+                    {new Date(order.orderDate).toLocaleDateString("en-US", {
+                      year: "2-digit",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })}
                   </p>
-                  <p className="text-gray-700 font-medium">Time: {new Date(order.orderDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}   </p>
+                  <p className="text-gray-700 font-medium">
+                    Time:{" "}
+                    {new Date(order.orderDate).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
+                  </p>
                   <div className="flex items-center space-x-2 py-2">
                     {statusIcons[order.status]?.icon}
-                    <span className="text-gray-700 text-xl font-bold">{order.status}</span>
+                    <span className="text-gray-700 text-xl font-bold">
+                      {order.status}
+                    </span>
                   </div>
                   {selectedOrder === order._id && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-6 z-10 ">
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-6 z-10">
                       <div className="bg-white overflow-auto max-h-[400px] rounded-lg p-8 w-full max-w-lg relative">
                         <MdClose
                           className="absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer hover:text-green-500"
