@@ -16,14 +16,14 @@ function Product({ name, description, price, image, id, handleProductClick }) {
       setErrorMessage("Please log in to add items to your cart.");
       return;
     }
-
+    setSuccessMessage("Adding to cart...");
     try {
       const response = await fetch(`${PORT}/cart/add/${user._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: id }),
       });
-
+      setSuccessMessage("Adding to cart...");
       if (response.ok) {
         setSuccessMessage("Added to cart!");
         setTimeout(() => setSuccessMessage(null), 3000);
