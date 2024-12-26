@@ -30,7 +30,7 @@ function Cart() {
     };
 
     fetchCartItems();
-  }, (2000)[(user, backend_products_url)]);
+  }, (500)[(user, backend_products_url)]);
 
   const calculateDiscountPercentage = (subtotal) => {
     if (subtotal === 0) return 0;
