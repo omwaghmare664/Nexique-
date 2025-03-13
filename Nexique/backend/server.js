@@ -17,7 +17,8 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors({
     origin: [
         "https://nexique.onrender.com",
-        "https://nexique-admin.onrender.com"
+        "https://nexique-admin.onrender.com",
+        "https://nexique.vercel.app"
          // "http://localhost:5173",
          // "http://localhost:5174"
     ], // specify your frontend origins as an array
