@@ -1,0 +1,20 @@
+.setanchor {
+    transform: translate(-50%, -50%);
+}
+
+.realview {
+  perspective: 1000px; /* Controls the depth of the 3D effect */
+}
+
+.realimg1{
+    transform: rotateY(45deg) rotateZ(-5deg);
+    animation: animatecrads 2s ease-in-out  infinite alternate ;
+}
+.realimg2{
+    transform: rotateY(-45deg) rotateZ(5deg);
+}
+
+.landmaintextshadow {
+    text-shadow: 2px 2px 10px rgba(255, 112, 112, 0.658);
+}
+
