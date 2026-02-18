@@ -13,9 +13,6 @@ function LandHome() {
         {/* Animated orbs */}
         <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-rose-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-gradient-to-l from-blue-100/30 to-rose-100/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23fecaca" fill-opacity="0.2"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
       </div>
 
       {/* Main Content */}
@@ -34,7 +31,7 @@ function LandHome() {
 
             {/* Main Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text bg-[length:200%] animate-gradient">
+              <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
                 Smart
               </span>
               <br />
@@ -64,7 +61,7 @@ function LandHome() {
                 { icon: ChevronRight, text: "24/7 Support", color: "text-blue-500" }
               ].map((feature, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <div className={`p-1.5 rounded-lg bg-gradient-to-br from-${feature.color.split('-')[1]}-50 to-${feature.color.split('-')[1]}-100`}>
+                  <div className="p-1.5 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100">
                     <feature.icon className={`w-4 h-4 ${feature.color}`} />
                   </div>
                   <span className="text-sm font-medium text-gray-700">{feature.text}</span>
@@ -105,10 +102,6 @@ function LandHome() {
                   <div 
                     key={i} 
                     className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-500 to-purple-600 border-2 border-white shadow-lg"
-                    style={{ 
-                      backgroundImage: `url(https://i.pravatar.cc/100?img=${i})`,
-                      backgroundSize: 'cover'
-                    }}
                   ></div>
                 ))}
                 <div className="w-8 h-8 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-600 shadow-lg">
@@ -143,49 +136,49 @@ function LandHome() {
                   </div>
                 </div>
 
-                {/* Product image placeholder - replace with actual product image */}
-                <div className="relative h-48 bg-gradient-to-br from-rose-100 to-purple-100 rounded-2xl mb-6 overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-4xl">🛍️</span>
-                  </div>
-                </div>
-
-                {/* Product details */}
+                {/* Product details from your image */}
                 <div className="space-y-4">
-                  {/* Price */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Price</span>
-                    <span className="text-2xl font-bold text-gray-900">$260.00</span>
-                  </div>
-                  
-                  {/* Quantity selector */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Quantity</span>
-                    <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">-</button>
-                      <span className="font-medium">1</span>
-                      <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">+</button>
+                  {/* Cart Section */}
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <h4 className="font-semibold text-gray-700 mb-3">Cart</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Product</span>
+                        <div className="text-right">
+                          <div className="font-medium">Price</div>
+                          <div className="text-rose-500 font-bold">$260.00</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Quantity</span>
+                        <div className="flex items-center gap-3">
+                          <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-200 transition-colors shadow-sm">-</button>
+                          <span className="font-medium w-8 text-center">1</span>
+                          <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-200 transition-colors shadow-sm">+</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Divider */}
-                  <div className="border-t border-gray-100 my-4"></div>
 
                   {/* Order Summary */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span className="font-medium">$230.00</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Discount</span>
-                      <span className="text-green-600 font-medium">-10% off</span>
-                    </div>
-                    <div className="flex items-center justify-between text-lg font-bold">
-                      <span>Total</span>
-                      <span className="bg-gradient-to-r from-rose-500 to-purple-600 bg-clip-text text-transparent">
-                        $210.00
-                      </span>
+                  <div className="bg-gradient-to-r from-rose-50 to-purple-50 rounded-xl p-4">
+                    <h4 className="font-semibold text-gray-700 mb-3">Order Summary</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Subtotal</span>
+                        <span className="font-medium">$230.00</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Discount</span>
+                        <span className="text-green-600 font-medium">10% off</span>
+                      </div>
+                      <div className="border-t border-rose-200 my-2"></div>
+                      <div className="flex items-center justify-between text-lg font-bold">
+                        <span>Total</span>
+                        <span className="bg-gradient-to-r from-rose-500 to-purple-600 bg-clip-text text-transparent">
+                          $210.00
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -197,33 +190,8 @@ function LandHome() {
                 </div>
 
                 {/* Floating badge */}
-                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-400 to-rose-400 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-bounce">
+                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-400 to-rose-400 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
                   AI RECOMMENDED
-                </div>
-              </div>
-            </div>
-
-            {/* Floating elements */}
-            <div className="absolute -top-10 -left-10 bg-white rounded-2xl p-4 shadow-xl hidden lg:block">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Smart Savings</p>
-                  <p className="font-bold text-sm">$50 off today</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -bottom-5 -right-5 bg-white rounded-2xl p-4 shadow-xl hidden lg:block">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-                  <Star className="w-5 h-5 text-purple-600 fill-purple-600" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Rating</p>
-                  <p className="font-bold text-sm">4.9/5 Stars</p>
                 </div>
               </div>
             </div>
@@ -237,19 +205,6 @@ function LandHome() {
           <div className="w-1.5 h-3 bg-gradient-to-r from-rose-500 to-purple-600 rounded-full animate-bounce"></div>
         </div>
       </div>
-
-      {/* Add keyframe animation for gradient */}
-      <style jsx>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% auto;
-          animation: gradient 4s ease infinite;
-        }
-      `}</style>
     </div>
   );
 }
