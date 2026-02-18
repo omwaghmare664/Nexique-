@@ -1,5 +1,4 @@
 import React from "react";
-import { ArrowRight, Sparkles, Star, Zap, Shield, ChevronRight } from 'lucide-react';
 
 function LandHome() {
   return (
@@ -23,7 +22,7 @@ function LandHome() {
           <div className="text-center lg:text-left order-2 lg:order-1">
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl px-4 py-2 mb-8 shadow-lg shadow-rose-100/20">
-              <Sparkles className="w-4 h-4 text-rose-500" />
+              <span className="text-rose-500 text-lg">✨</span>
               <span className="text-sm font-semibold bg-gradient-to-r from-rose-500 to-purple-600 bg-clip-text text-transparent">
                 AI-POWERED SHOPPING
               </span>
@@ -40,7 +39,7 @@ function LandHome() {
                 <div className="absolute -top-6 -right-12 hidden lg:block">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-rose-500 to-purple-500 rounded-full blur-xl opacity-50 animate-pulse"></div>
-                    <Star className="w-8 h-8 text-rose-500 fill-rose-500 relative" />
+                    <span className="text-rose-500 text-3xl relative">⭐</span>
                   </div>
                 </div>
               </span>
@@ -55,14 +54,14 @@ function LandHome() {
             {/* Features List */}
             <div className="grid grid-cols-2 gap-4 mb-10 max-w-lg mx-auto lg:mx-0">
               {[
-                { icon: Zap, text: "AI Recommendations", color: "text-yellow-500" },
-                { icon: Shield, text: "Secure Payments", color: "text-green-500" },
-                { icon: Star, text: "4.9/5 Rating", color: "text-purple-500" },
-                { icon: ChevronRight, text: "24/7 Support", color: "text-blue-500" }
+                { icon: "⚡", text: "AI Recommendations", color: "text-yellow-500" },
+                { icon: "🛡️", text: "Secure Payments", color: "text-green-500" },
+                { icon: "⭐", text: "4.9/5 Rating", color: "text-purple-500" },
+                { icon: "💬", text: "24/7 Support", color: "text-blue-500" }
               ].map((feature, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className="p-1.5 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100">
-                    <feature.icon className={`w-4 h-4 ${feature.color}`} />
+                    <span className={`w-4 h-4 ${feature.color}`}>{feature.icon}</span>
                   </div>
                   <span className="text-sm font-medium text-gray-700">{feature.text}</span>
                 </div>
@@ -74,7 +73,7 @@ function LandHome() {
               <button className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 to-purple-600 px-8 py-4 text-white font-semibold text-lg shadow-xl shadow-rose-500/30 hover:shadow-2xl hover:shadow-rose-500/40 transition-all duration-300">
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   Get Started Now
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
@@ -90,7 +89,7 @@ function LandHome() {
               <div className="flex items-center gap-2">
                 <div className="flex">
                   {[1,2,3,4,5].map((star) => (
-                    <Star key={star} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <span key={star} className="text-yellow-400 text-lg">⭐</span>
                   ))}
                 </div>
                 <span className="text-sm font-medium text-gray-600">from 2k+ reviews</span>
@@ -185,7 +184,7 @@ function LandHome() {
                   {/* Add to cart button */}
                   <button className="w-full bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-2xl py-4 font-semibold hover:shadow-lg hover:shadow-rose-500/30 transition-all duration-300 flex items-center justify-center gap-2 group">
                     <span>Add to Cart</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </button>
                 </div>
 
